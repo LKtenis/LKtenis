@@ -1,10 +1,50 @@
+
 /* =========================
    CONFIGURAÇÃO
 ========================= */
 
 // Número de WhatsApp da loja (formato internacional, só números).
-// Troque pelo número real da LK antes de publicar o site.
 const WHATSAPP_NUMBER = "14998900334";
+
+// Imagem nova do tênis KL
+const NEW_SHOE_IMAGE = "image-removebg-preview (1).png";
+
+/* =========================
+   ATUALIZAÇÃO DAS IMAGENS
+========================= */
+
+// Página inicial
+const heroImage = document.querySelector(".product-display .product-image");
+
+if (heroImage) {
+    heroImage.src = NEW_SHOE_IMAGE;
+}
+
+// Seção de benefícios
+const benefitImage = document.querySelector(".benefit-image img");
+
+if (benefitImage) {
+    benefitImage.src = NEW_SHOE_IMAGE;
+}
+
+// Primeiro produto
+const firstProduct = document.querySelector(
+    '.product-card[data-id="lk-performance"]'
+);
+
+if (firstProduct) {
+    firstProduct.dataset.image = NEW_SHOE_IMAGE;
+
+    const firstProductImage = firstProduct.querySelector(
+        ".product-card-image img"
+    );
+
+    if (firstProductImage) {
+        firstProductImage.src = NEW_SHOE_IMAGE;
+    }
+}
+
+// O segundo produto não é alterado.
 
 /* =========================
    ESTADO DO CARRINHO
@@ -182,7 +222,7 @@ document.querySelectorAll(".product-card").forEach((card) => {
     const product = {
         id: card.dataset.id,
         name: card.dataset.name,
-        price: parseFloat(card.dataset.price),
+        price: parseFloat(card.dataset.price.replace(",", ".")),
         image: card.dataset.image,
     };
 
@@ -222,23 +262,13 @@ document.querySelectorAll(".product-card").forEach((card) => {
 });
 
 /* =========================
-   CONTA — ATENÇÃO
-   Este é um sistema de conta simples, feito só com
-   HTML/CSS/JS (sem servidor). Os dados ficam salvos
-   apenas no navegador do próprio cliente (localStorage).
-   Não é um sistema de autenticação seguro — não use
-   senhas reais/reaproveitadas de outros sites aqui.
-   Para contas de verdade (seguras, acessíveis em
-   qualquer aparelho) é preciso um backend com banco
-   de dados.
+   CONTA
 ========================= */
 
 const ACCOUNTS_KEY = "lk_accounts";
 const SESSION_KEY = "lk_session";
 const ORDERS_KEY = "lk_orders";
 
-// Ofuscação simples só para não gravar a senha em texto puro.
-// NÃO é criptografia segura.
 function simpleHash(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
